@@ -453,7 +453,7 @@ void matrix_init_kb(void)
 void matrix_scan_kb(void) {
   rtcGetTime(&RTCD1, &last_timespec);
   uint16_t minutes_since_midnight = last_timespec.millisecond / 1000 / 60;
-
+  draw_ui();
   if (minutes_since_midnight != last_minute){
     last_minute = minutes_since_midnight;
     if(!oled_sleeping){
@@ -464,7 +464,7 @@ void matrix_scan_kb(void) {
   if (queue_for_send && oled_mode != OLED_OFF) {
     oled_sleeping = false;
     read_host_led_state();
-    draw_ui();
+
     queue_for_send = false;
   }
   if (timer_elapsed(last_flush) > ScreenOffInterval && !oled_sleeping) {
